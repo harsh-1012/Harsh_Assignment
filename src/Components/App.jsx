@@ -38,6 +38,31 @@ function App() {
     setText(event.target.value);
   }
 
+  function handleArrayChange(temp,str){
+    //setArr(temp);
+    console.log(temp);
+    if(str==="delete"){
+      const new_arr = arr.filter(function(entry){
+        return (!temp.includes(parseInt(entry.id)));
+      });
+      console.log(new_arr);
+      setArr(new_arr);
+    }
+    else{
+      const editId = temp[0];
+      const changedValue = temp[1];
+      const new_arr = arr.map(function(entry){
+        if(parseInt(entry.id)===parseInt(editId)){
+          return {...changedValue,key:editId};
+        }
+        else{
+          return entry;
+        }
+      });  
+      setArr(new_arr);
+    }
+  }
+
   return (
     <div>
       <div>
@@ -47,7 +72,7 @@ function App() {
         </button>
       </div>
       <div className="print">
-        <Print arr={filteredResults}/>
+        <Print arr={filteredResults} handleArrayChange={handleArrayChange}/>
       </div>
     </div>
   );

@@ -18,7 +18,7 @@ function Bar(props) {
                 <button className="btn btn-outline-dark" onClick={handleclick} name={2}>2</button> 
                </>
             );
-        }else{
+        }else if(props.range===3){
             return ( 
                <>
                 <button className="btn btn-outline-dark" onClick={handleclick} name={1}>1</button>

@@ -1,3 +1,6 @@
+body{
+    background-color: rgb(219 219 219) !important;
+}
 .popup{
     z-index: 1;
     position: absolute;
@@ -18,6 +21,22 @@
     margin-left: 3%;
     position: relative;
     top: 12px;
+    border-radius: 8px;
+    border-style: none;
+    height: 36px;
+    border-radius: 4px;
+    padding-left: 12px;
+    font-size: 14px;
+    font-weight: normal;
+    border: 1px solid rgb(137, 151, 155);
+    transition: border-color 150ms ease-in-out 0s;
+    outline: none;
+    color: rgb(33, 49, 60);
+    background-color: rgb(255, 255, 255);
+    padding-right: 12px;
+}
+.search:hover{
+    box-shadow: rgb(231 238 236) 0px 0px 0px 3px;
 }
 .search-icon{
     position: relative;
@@ -45,6 +64,9 @@
     position: absolute;
     top: 5px;
     right: 50px;
+}
+.selected{
+    position:absolute;
 }
 .bar{
     display: flex;
@@ -101,8 +123,14 @@ th{
     color: rgb(187, 98, 98);
 }
 .delete-checked span{
-    color: red;
+    color: #b75f5f;
     font-size: 30px;
+}
+.form-control:focus{
+    box-shadow: 0 0 0 0.25rem rgb(32 42 56 / 25%) !important;
+}
+.searchDiv{
+    display:flex;
 }
 .btn-outline-dark{
     padding: 5px !important;
