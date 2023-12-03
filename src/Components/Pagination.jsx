@@ -40,16 +40,27 @@ function Pagination(props){
         // event.target.checked property
         const id = parseInt(event.target.name);
         
-        if(event.target.checked===true){
+        const element = document.getElementById(id);
+        const rows = element.getElementsByClassName("row-data-cells");
+
+        if(event.target.checked===true){   
             setDeleteID(function(prev_arr){
                 return [...prev_arr,id]
             });
+            // also make it greyish in color
+            for(let j of rows){
+                j.style.backgroundColor="#dddddd";
+            }
         }else{
             setDeleteID(function(prev_arr){
                 return prev_arr.filter(function(ID){
                     return (ID!==id);
                 });
             });
+            // remove its greyish color
+            for(let j of rows){
+                j.style.backgroundColor="white";
+            }
         }
     }
   
@@ -65,6 +76,9 @@ function Pagination(props){
     }
     function handleDelete(event){
         let id = parseInt(event.target.getAttribute('name'));
+        const element = document.getElementById(id);
+        const rows = element.getElementsByClassName("row-data-cells");
+
         setNewArr(function(prev_arr){
             return prev_arr.filter(function(entry,index){
                     return (index!==id);
@@ -76,14 +90,28 @@ function Pagination(props){
                 input.checked = false;
             });
         }
+        for(let j of rows){
+            j.style.backgroundColor="white";
+        }
     }
 
     function handleDeleteChecked(){
+        
         setNewArr(function(prev_arr){
             return prev_arr.filter(function(entry,index){
                 // if index in deleteID then return false
                 // else return true
-                return (!DeleteID.includes(index));
+                if(DeleteID.includes(index)){
+                    const element = document.getElementById(index);
+                    const rows = element.getElementsByClassName("row-data-cells");
+                    for(let j of rows){
+                        j.style.backgroundColor="white";
+                    }
+                    return false;
+                }
+                else{
+                    return true;
+                }
             });
         });
         setDeleteID([]);
@@ -113,12 +141,12 @@ function Pagination(props){
 
     function createEntry(entry,index){
         return(
-            <tr key={index}>
-                <td><input type="checkbox" name={index} onChange={handleChange}/></td>
-                <td><span>{entry.name}</span></td>
-                <td><span>{entry.email}</span></td>
-                <td><span>{entry.role}</span></td>
-                <td>
+            <tr key={index} className="row-cells" id={index}>
+                <td className="row-data-cells"><input type="checkbox" name={index} onChange={handleChange}/></td>
+                <td className="row-data-cells"><span>{entry.name}</span></td>
+                <td className="row-data-cells"><span>{entry.email}</span></td>
+                <td className="row-data-cells"><span>{entry.role}</span></td>
+                <td className="row-data-cells">
                     <div className="action">
                         <button name={index} onClick={handleEdit} className="edit btn" >
                             <span name={index} className="material-symbols-outlined">edit_square</span>
@@ -181,20 +209,23 @@ function Pagination(props){
             </table>
 
             <button onClick={handleDeleteChecked} className="delete-checked btn">
-                <span className="material-symbols-outlined">remove_selection</span>
+                <span class="material-icons">delete_sweep</span>
             </button>
             {editing===true?
                 <div className="popup container-fluid">
-                    <label htmlFor="name" className="form-label">Name</label>
-                    <input type="text" id="name" name="name" className="form-control" value={val.name} onChange={editChange}/>
+                    <label htmlFor="name" className="form-label">Name
+                        <input type="text" id="name" name="name" className="form-control" value={val.name} onChange={editChange}/>
+                    </label>
                     
-                    <label htmlFor="email" className="form-label">Email</label>
-                    <input type="text" id="email" name="email" className="form-control" value={val.email} onChange={editChange}/>
+                    <label htmlFor="email" className="form-label">Email
+                        <input type="text" id="email" name="email" className="form-control" value={val.email} onChange={editChange}/>
+                    </label>
                     
-                    <label htmlFor="role" className="form-label">Role</label>
-                    <input type="text" id="role" name="role" className="form-control" value={val.role} onChange={editChange}/>
+                    <label htmlFor="role" className="form-label">Role
+                        <input type="text" id="role" name="role" className="form-control" value={val.role} onChange={editChange}/>
+                    </label>
 
-                    <button onClick={saveChanges} className="save btn btn-success">Save</button>
+                    <button onClick={saveChanges} className="save btn btn-dark">Save</button>
                 </div>
                 :
                 null
